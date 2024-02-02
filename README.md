@@ -1,4 +1,4 @@
-Nama : Devandra Reswara Arkananta
+Nama : Devandra Reswara Arkananta <br>
 NPM  : 2206083552
 
 - Reflection 1
