@@ -34,4 +34,32 @@ public class ProductController {
         model.addAttribute("products", allProducts);
         return "productList";
     }
+
+    @GetMapping("/edit/{productName}")
+    public String editProductPage(@PathVariable String productName, Model model) {
+        Product productEdit = service.findByProductName(productName);
+        if (productEdit != null) {
+            model.addAttribute("product", productEdit);
+            service.delete(productName);
+            return "editProduct";
+        } else {
+            return "redirect:/product/list";
+        }
+    }
+
+    @PostMapping("/edit/{productName}")
+    public String editProductPost(@ModelAttribute Product product, Model model) {
+        service.create(product);
+        return "redirect:list";
+    }
+
+    @GetMapping("/delete/{productName}")
+    public String deleteProduct(@PathVariable String productName, Model model) {
+        if (service.delete(productName)) {
+            return "redirect:/product/list";
+        } else {
+            // Handle product not found or deletion unsuccessful
+            return "redirect:/product/list";
+        }
+    }
 }
