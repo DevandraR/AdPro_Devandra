@@ -58,7 +58,6 @@ public class ProductController {
         if (service.delete(productName)) {
             return "redirect:/product/list";
         } else {
-            // Handle product not found or deletion unsuccessful
             return "redirect:/product/list";
         }
     }
