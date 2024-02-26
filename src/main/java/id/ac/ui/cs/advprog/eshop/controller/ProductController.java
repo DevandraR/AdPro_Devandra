@@ -19,7 +19,7 @@ public class ProductController {
     public String createProductPage(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
-        return "createProduct";
+        return "CreateProduct";
     }
 
     @PostMapping("/create")
@@ -32,34 +32,26 @@ public class ProductController {
     public String productListPage(Model model) {
         List<Product> allProducts = service.findAll();
         model.addAttribute("products", allProducts);
-        return "productList";
+        return "ProductList";
     }
 
-    @GetMapping("/edit/{productName}")
-    public String editProductPage(@PathVariable String productName, Model model) {
-        Product productEdit = service.findByProductName(productName);
-        if (productEdit != null) {
-            model.addAttribute("product", productEdit);
-            service.delete(productName);
-            return "editProduct";
-        } else {
-            return "redirect:/product/list";
-        }
+    @GetMapping("/edit/{productId}")
+    public String editProductPage(@PathVariable("productId") String productId, Model model) {
+        Product product = service.findById(productId);
+        model.addAttribute("product", product);
+        return "EditProduct";
     }
 
-    @PostMapping("/edit/{productName}")
+    @PostMapping("/edit")
     public String editProductPost(@ModelAttribute Product product, Model model) {
-        service.create(product);
+        System.out.println(product.getProductId());
+        service.update(product.getProductId(), product);
         return "redirect:list";
     }
 
-    @GetMapping("/delete/{productName}")
-    public String deleteProduct(@PathVariable String productName, Model model) {
-        if (service.delete(productName)) {
-            return "redirect:/product/list";
-        } else {
-            // Handle product not found or deletion unsuccessful
-            return "redirect:/product/list";
-        }
+    @PostMapping("/delete")
+    public String deleteProduct(@RequestParam("productId") String productId) {
+        service.deleteById(productId);
+        return "redirect:list";
     }
 }

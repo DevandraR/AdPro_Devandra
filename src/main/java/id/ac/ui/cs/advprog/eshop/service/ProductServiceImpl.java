@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -31,12 +30,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findByProductName(String productName) {
-        return productRepository.findByProductName(productName);
+    public Product findById(String productId) {
+        return productRepository.findById(productId);
     }
 
     @Override
-    public boolean delete(String productName) {
-        return productRepository.delete(productName);
+    public void update(String productId, Product product) {
+        productRepository.update(productId, product);
+    }
+
+    @Override
+    public boolean deleteById(String productId) {
+        return productRepository.delete(productId);
     }
 }
