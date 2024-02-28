@@ -1,75 +1,59 @@
-# This workflow uses actions that are not certified by GitHub. They are provided
-# by a third-party and are governed by separate terms of service, privacy
-# policy, and support documentation.
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
 
-name: Code Scanning / Analysis
+# This workflow helps you trigger a SonarCloud analysis of your code and populates
+# GitHub Code Scanning alerts with the vulnerabilities found.
+# Free for open source project.
+
+# 1. Login to SonarCloud.io using your GitHub account
+
+# 2. Import your project on SonarCloud
+#     * Add your GitHub organization first, then add your repository as a new project.
+#     * Please note that many languages are eligible for automatic analysis,
+#       which means that the analysis will start automatically without the need to set up GitHub Actions.
+#     * This behavior can be changed in Administration > Analysis Method.
+#
+# 3. Follow the SonarCloud in-product tutorial
+#     * a. Copy/paste the Project Key and the Organization Key into the args parameter below
+#          (You'll find this information in SonarCloud. Click on "Information" at the bottom left)
+#
+#     * b. Generate a new token and add it to your Github repository's secrets using the name SONAR_TOKEN
+#          (On SonarCloud, click on your avatar on top-right > My account > Security
+#           or go directly to https://sonarcloud.io/account/security/)
+
+# Feel free to take a look at our documentation (https://docs.sonarcloud.io/getting-started/github/)
+# or reach out to our community forum if you need some help (https://community.sonarsource.com/c/help/sc/9)
+
+name: SonarCloud Analysis
+
 on:
-  # For Branch-Protection check. Only the default branch is supported. See
-  # https://github.com/ossf/scorecard/blob/main/docs/checks.md#branch-protection
-  branch_protection_rule:
-  # To guarantee Maintained check is occasionally updated. See
-  # https://github.com/ossf/scorecard/blob/main/docs/checks.md#maintained
-  schedule:
-    - cron: '31 2 * * 4'
   push:
-  pull_request:
-
-# Declare default permissions as read only.
-permissions: read-all
+    branches:
+      - '*'
 
 jobs:
-  analysis:
-    name: Scanning with Scorecard tools
+  sonarcloud:
     runs-on: ubuntu-latest
-    permissions:
-      # Needed to upload the results to code-scanning dashboard.
-      security-events: write
-      # Needed to publish results and get a badge (see publish_results below).
-      id-token: write
-      # Uncomment the permissions below if installing in a private repository.
-      # contents: read
-      # actions: read
 
     steps:
-      - name: PMD
-        uses: pmd/pmd-github-action@v1.4.1
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: "Checkout code"
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
         with:
-          persist-credentials: false
+          distribution: 'adopt'
+          java-version: '21'
 
-      - name: "Run analysis"
-        uses: ossf/scorecard-action@e38b1902ae4f44df626f11ba0734b14fb91f8f86 # v2.1.2
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          results_file: results.sarif
-          results_format: sarif
-          # (Optional) "write" PAT token. Uncomment the `repo_token` line below if:
-          # - you want to enable the Branch-Protection check on a *public* repository, or
-          # - you are installing Scorecard on a *private* repository
-          # To create the PAT, follow the steps in https://github.com/ossf/scorecard-action#authentication-with-pat.
-          # repo_token: ${{ secrets.SCORECARD_TOKEN }}
-
-          # Public repositories:
-          #   - Publish results to OpenSSF REST API for easy access by consumers
-          #   - Allows the repository to include the Scorecard badge.
-          #   - See https://github.com/ossf/scorecard-action#publishing-results.
-          # For private repositories:
-          #   - `publish_results` will always be set to `false`, regardless
-          #     of the value entered here.
-          publish_results: true
-
-      # Upload the results as artifacts (optional). Commenting out will disable uploads of run results in SARIF
-      # format to the repository Actions tab.
-      - name: "Upload artifact"
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
-        with:
-          name: SARIF file
-          path: results.sarif
-          retention-days: 5
-
-      # Upload the results to GitHub's code scanning dashboard.
-      - name: "Upload to code-scanning"
-        uses: github/codeql-action/upload-sarif@17573ee1cc1b9d061760f3a006fc4aac4f944fd5 # v2.2.4
-        with:
-          sarif_file: results.sarif
+          args: >
+            -Dsonar.organization=devandrar
+            -Dsonar.projectKey=DevandraR_AdPro_Devandra
+            -Dsonar.exclusions=**/*.java
