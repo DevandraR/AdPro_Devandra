@@ -57,5 +57,6 @@ jobs:
             -Dsonar.organization=devandrar
             -Dsonar.projectKey=DevandraR_AdPro_Devandra
             -Dsonar.exclusions=**/*.java
+            -X
 
             
