@@ -2,7 +2,7 @@
 # by a third-party and are governed by separate terms of service, privacy
 # policy, and support documentation.
 
-name: Scorecard supply-chain security
+name: Code Scanning / Analysis
 on:
   # For Branch-Protection check. Only the default branch is supported. See
   # https://github.com/ossf/scorecard/blob/main/docs/checks.md#branch-protection
@@ -12,13 +12,14 @@ on:
   schedule:
     - cron: '31 2 * * 4'
   push:
+  pull_request:
 
 # Declare default permissions as read only.
 permissions: read-all
 
 jobs:
   analysis:
-    name: Scorecard analysis
+    name: Scanning with Scorecard tools
     runs-on: ubuntu-latest
     permissions:
       # Needed to upload the results to code-scanning dashboard.
@@ -30,6 +31,11 @@ jobs:
       # actions: read
 
     steps:
+      - name: Harden Runner
+          uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+          with:
+            egress-policy: audit
+
       - name: "Checkout code"
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
         with:
