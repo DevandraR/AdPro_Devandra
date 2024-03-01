@@ -35,26 +35,13 @@ public class ProductRepository {
     }
 
     public Product update (String id, Product updateProduct) {
-        for (int i = 0; i < productData.size(); i++) {
-            Product product = productData.get(i);
-            if (product.getProductId().equals(id)) {
-                product.setProductName(updateProduct.getProductName());
-                product.setProductQuantity(updateProduct.getProductQuantity());
-                return product;
-            }
-        }
-        return null;
+        UpdateProduct update = new UpdateProduct(this);
+        return update.updateProduct(id, updateProduct);
     }
 
     public boolean delete(String productId) {
-        for (Iterator<Product> iterator = productData.iterator(); iterator.hasNext(); ) {
-            Product product = iterator.next();
-            if (product.getProductId().equals(productId)) {
-                iterator.remove();
-                return true;
-            }
-        }
-        return false;
+        DeleteProduct deleteProduct = new DeleteProduct(this);
+        return deleteProduct.deleteProduct(productId);
     }
 
     public void clear() { 

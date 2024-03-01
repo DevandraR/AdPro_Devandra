@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements CombinedService<Product> {
 
     @Autowired
     private ProductRepository productRepository;
@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean deleteById(String productId) {
+    public boolean deleteObjectById(String productId) {
         return productRepository.delete(productId);
     }
 }
