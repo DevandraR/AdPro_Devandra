@@ -50,7 +50,7 @@ public class OrderTest {
 
         assertEquals("13652556-012a-4c07-b546-54eb1396d79b", order.getId());
         assertEquals(1708560000L, order.getOrderTime());
-        assertEquals("Safira Sudrajat", order.getAutor());
+        assertEquals("Safira Sudrajat", order.getAuthor());
         assertEquals("WAITING_PAYMENT", order.getStatus());
     }
 
