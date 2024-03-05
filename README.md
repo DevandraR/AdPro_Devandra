@@ -25,3 +25,11 @@ NPM  : 2206083552
 
 </details>
 
+<details>
+  <summary>Modul 4</summary>
+  - Reflection <br>
+   <br> Menurut saya, Test driven development atau TDD sangatlah membantu dalam pengembangan aplikasi, karena kita dapat menentukan kriteria yang kita inginkan pada sebuah aplikasi sebelum kita membuatnya secara langsung, jadi sudah ada target yang di tetapkan sebelum kita membuat aplikasi. Jadi pembuatan aplikasi menjadi lebih terarah dan sekaligus langsung mengecek kode yang akan dibuat. Jika testing dibuat setelah development aplikasi, maka kadang testing yang dibuat tidak memenuhi ekspektasi awal karena akan cenderung untuk memenuhi kode yang sudah dibuat. Jadi Testing yang dibuat terlebih dahulu dapat menjadi safeguard dan benchmark terhadap aplikasi agar optimal dan target awal terpenuhi. <br>
+  
+   <br> Dalam mengevaluasi alur TDD dan tes unit, penting untuk memastikan bahwa prinsip F.I.R.S.T. terpenuhi, termasuk kecepatan, kemandirian, ketepatan, kemampuan untuk memvalidasi diri sendiri, dan ketepatan waktu. Jika ada pelanggaran terhadap prinsip-prinsip ini, perbaikan dapat dilakukan dengan mengurangi ketergantungan, mengontrol variabilitas, meningkatkan organisasi tes, dan mengintegrasikan alat otomatisasi tes. Selain itu, evaluasi alur TDD harus memperhitungkan apakah tes mencakup fungsionalitas yang diinginkan dengan cukup, apakah kode memenuhi kebutuhan tes, dan apakah iterasi dalam TDD membantu meningkatkan desain dan keberlanjutan kode. Jika alur TDD tidak membuktikan kegunaannya, langkah-langkah perbaikan termasuk peninjauan ulang kasus tes, analisis kode, dan refleksi pada konsistensi dalam penerapan TDD.<br>
+
+</details>
