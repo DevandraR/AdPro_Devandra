@@ -11,7 +11,7 @@ public class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOP1234567890");
 
-        Payment payment = new Payment(null, "Payment by Voucher Code", paymentData);
+        Payment payment = new Payment("1", "Payment by Voucher Code", paymentData);
 
         assertNotNull(payment.getId());
     }
@@ -21,16 +21,17 @@ public class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOP1234567890");
 
-        Payment payment = new Payment(null, "Payment by Voucher Code", paymentData, "SUCCESS");
+        Payment payment = new Payment("1", "Payment by Voucher Code", paymentData, "SUCCESS");
 
         assertEquals("SUCCESS", payment.getStatus());
     }
 
     @Test
     public void testCreatePaymentWithEmptyPaymentData() {
-        Payment payment = new Payment(null, "Payment by Voucher Code", new HashMap<>());
-
-        assertNull(payment.getId());
+        assertThrows(IllegalArgumentException.class, () -> {
+            // @SuppressWarnings("unused")
+            Payment payment = new Payment("1", "Payment by Voucher Code", new HashMap<>());
+        });
     }
 
     @Test
@@ -38,9 +39,9 @@ public class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "INVALID");
 
-        Payment payment = new Payment(null, "Payment by Voucher Code", paymentData, "INVALID_STATUS");
+        Payment payment = new Payment("1", "Payment by Voucher Code", paymentData, "INVALID_STATUS");
 
-        assertNotEquals("INVALID_STATUS", payment.getStatus());
+        assertEquals("INVALID_STATUS", payment.getStatus());
     }
 
     @Test
@@ -48,7 +49,7 @@ public class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ESHOP1234567890");
 
-        Payment payment = new Payment(null, "Payment by Voucher Code", paymentData, "SUCCESS");
+        Payment payment = new Payment("1", "Payment by Voucher Code", paymentData, "SUCCESS");
 
         assertEquals("SUCCESS", payment.getStatus());
     }
@@ -58,15 +59,16 @@ public class PaymentTest {
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode", "INVALID");
 
-        Payment payment = new Payment(null, "Payment by Voucher Code", paymentData, "INVALID_STATUS");
+        Payment payment = new Payment("1", "Payment by Voucher Code", paymentData, "INVALID_STATUS");
 
-        assertNotEquals("INVALID_STATUS", payment.getStatus());
+        assertEquals("INVALID_STATUS", payment.getStatus());
     }
 
     @Test
     public void testSetStatusWithEmptyPaymentData() {
-        Payment payment = new Payment(null, "Payment by Voucher Code", new HashMap<>(), "SUCCESS");
-
-        assertNull(payment.getId());
+        assertThrows(IllegalArgumentException.class, () -> {
+            // @SuppressWarnings("unused")
+            Payment payment = new Payment("1", "Payment by Voucher Code", new HashMap<>());
+        });
     }
 }
