@@ -29,7 +29,7 @@ public class PaymentTest {
     @Test
     public void testCreatePaymentWithEmptyPaymentData() {
         assertThrows(IllegalArgumentException.class, () -> {
-            // @SuppressWarnings("unused")
+            @SuppressWarnings("unused")
             Payment payment = new Payment("1", "Payment by Voucher Code", new HashMap<>());
         });
     }
@@ -67,7 +67,7 @@ public class PaymentTest {
     @Test
     public void testSetStatusWithEmptyPaymentData() {
         assertThrows(IllegalArgumentException.class, () -> {
-            // @SuppressWarnings("unused")
+            @SuppressWarnings("unused")
             Payment payment = new Payment("1", "Payment by Voucher Code", new HashMap<>());
         });
     }
