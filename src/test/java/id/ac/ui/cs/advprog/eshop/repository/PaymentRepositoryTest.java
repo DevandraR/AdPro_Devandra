@@ -1,5 +1,4 @@
 package id.ac.ui.cs.advprog.eshop.repository;
-import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +27,7 @@ public class PaymentRepositoryTest {
 
     @Test
     public void testSaveCreate() {
-        Payment payment = new Payment("1", "Payment by Voucher Code", null);
+        Payment payment = new Payment("1", "Payment by Voucher Code", Map.of("BCA", "1234567890"));
         paymentRepository.addPayment(payment);
 
         assertEquals(1, paymentRepository.getAllPayments().size());
@@ -37,18 +36,17 @@ public class PaymentRepositoryTest {
 
     @Test
     public void testSaveUpdate() {
-        Payment payment = new Payment("1", "Payment by Voucher Code", null);
+        Payment payment = new Payment("1", "Payment by Voucher Code", Map.of("Mandiri", "1234567890"));
         paymentRepository.addPayment(payment);
 
         payment.setStatus("SUCCESS");
-        paymentRepository.setStatus(payment, "SUCCESS");
 
         assertEquals("SUCCESS", paymentRepository.getPayment("1").getStatus());
     }
 
     @Test
     public void testFindByIdIfFound() {
-        Payment payment = new Payment("1", "Payment by Voucher Code", null);
+        Payment payment = new Payment("1", "Payment by Voucher Code", Map.of("BJB", "1234567890"));
         paymentRepository.addPayment(payment);
 
         assertNotNull(paymentRepository.getPayment("1"));
@@ -57,9 +55,9 @@ public class PaymentRepositoryTest {
     @Test
     public void testFindByIdIfNotFound() {
         for (Payment payment : payments) {
-            paymentRepository.save(payment);
+            paymentRepository.addPayment(payment);
         }
-        Payment find = paymentRepository.findById("nonexistent_id");
+        Payment find = paymentRepository.getPayment("nonexistent_id");
         assertNull(find);
     }
 }
